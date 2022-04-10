@@ -1,52 +1,104 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import {useLocalStorage} from "react-use";
+import { useLocalStorage } from "react-use";
 import Navbar from "./components/Navbar";
 import Cardcep from "./components/Cardcep";
 import SearchCep from "./components/SearchCep";
-import Results from "./components/Results";
 import Loading from "./components/Loading";
-import Error from "./components/Erro";
-
+import ErroAlert from "./components/ErroAlert";
 
 function App() {
-  const 
+  const [cacheSearch, setCacheSearch, removeCacheSearch] = useLocalStorage(
+    "cepSearch",
+    []
+  );
   const [cep, setCep] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [loadingResults, setLoadingResults] = useState(false);
-  const [searchcep, SetSearchCep] = useState()
+  const [searchcep, SetSearchCep] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  // useEffect(() => {
+  //   handleRequestApi();
+  // }, []);
 
   useEffect(() => {
-    handleRequestApi();
-  }, []);
-    
-  
-  async function handleRequestApi(){
-    try {
-     const response = await fetch(`https://viacep.com.br/ws/${searchcep}/json/`);
-      const {cep, logradouro, complemento,bairro,localidade,uf} = await response.json();
-      console.log(cep,logradouro,complemento,bairro,localidade, uf);
-      
-      const currentCep = {
-        cep, logradouro, complemento,bairro,uf
-      }
-        setCep(currentCep);
-    } catch (error) {
-      console.log(error)
+    saveInCache();
+  }, [cep]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowResults(false);
+      setLoading(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [showResults]);
+
+  function checkInCache() {
+    return cacheSearch.find((item) => item.cep === searchcep);
+  }
+
+  function saveInCache() {
+    return setCacheSearch([...cacheSearch, cep]);
+  }
+
+  async function handleFindCep() {
+    const result = checkInCache();
+    console.log(result);
+    if (result) {
+      return setCep(result);
     }
-  };
+    await handleRequestApi();
+  }
+
+  async function handleRequestApi() {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://viacep.com.br/ws/${searchcep}/json/`
+      );
+      const { cep, logradouro, complemento, bairro, localidade, uf } =
+        await response.json();
+      console.log(cep, logradouro, complemento, bairro, localidade, uf);
+
+      const currentCep = {
+        cep,
+        logradouro,
+        complemento,
+        bairro,
+        uf,
+      };
+      setLoading(false);
+      setCep(currentCep);
+    } catch (error) {
+      setShowResults(true);
+      console.log(error);
+    }
+  }
 
   return (
     <div className="App">
       <Navbar />
       <div className="container-card">
-        <SearchCep searchcep={searchcep} SetSearchCep={SetSearchCep} handleRequestApi={handleRequestApi}/>
-        {loadingResults && <Loading/>}
-        {showResults && <Results/>}
-        <Cardcep cep={cep.cep} logradouro={cep.logradouro} 
-        complemento={cep.complemento} bairro={cep.bairro} localidade={cep.localidade}
-         uf={cep.uf}/>
+        {showResults && <ErroAlert />}
+        {loading && <span>Carregando...</span>}
+        <SearchCep
+          searchcep={searchcep}
+          SetSearchCep={SetSearchCep}
+          handleFindCep={handleFindCep}
+        />
+        {/* {loadingResults && <Loading/>} */}
+        <Cardcep
+          cep={cep.cep}
+          logradouro={cep.logradouro}
+          complemento={cep.complemento}
+          bairro={cep.bairro}
+          localidade={cep.localidade}
+          uf={cep.uf}
+        />
       </div>
     </div>
   );
