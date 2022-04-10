@@ -9,14 +9,24 @@ import Typography from '@material-ui/core/Typography';
 
 
 
-function Cardcep({result}) {
+function Cardcep({cep,logradouro,complemento,bairro,localidade,uf }) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        title="CEP" className={classes.CardHeader}
+      <CardHeader className={classes.titulo}
+        title={cep}
       />
+      <CardContent>
+          <Typography variant="body2" component="li" className={classes.marginRight}>
+          <ul className={classes.direction}>
+            <li>{logradouro}</li>
+            <li>{complemento}</li>
+            <li>{bairro}</li>
+            <li>{uf}</li>
+          </ul>
+          </Typography>
+      </CardContent>
     </Card>
   );
 }
