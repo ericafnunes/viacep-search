@@ -1,8 +1,7 @@
 import { TextField, Button } from '@material-ui/core'
-import Results from '../Results';
 import useStyles from './style';
 
-function SearchCep() {
+function SearchCep({searchcep, SetSearchCep, handleRequestApi}) {
 
     const classes = useStyles();
 
@@ -11,12 +10,14 @@ function SearchCep() {
             <TextField 
                 className={classes.textinput}
                 label="digitar cep"
-                onChange={e => (e.target.value)}
+                value={searchcep}
+                onChange={e => SetSearchCep(e.target.value)}
                 variant="outlined"
             />
             <Button
                 className={classes.button}
-                variant="contained">
+                variant="contained"
+                onClick={handleRequestApi}>
                 buscar
             </Button>
         </div>
