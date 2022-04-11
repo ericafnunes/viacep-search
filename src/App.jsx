@@ -26,6 +26,7 @@ function App() {
     saveInCache();
   }, [cep]);
 
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowResults(false);
@@ -37,13 +38,16 @@ function App() {
     };
   }, [showResults]);
 
+
   function checkInCache() {
     return cacheSearch.find((item) => item.cep === searchcep);
   }
 
+
   function saveInCache() {
     return setCacheSearch([...cacheSearch, cep]);
   }
+
 
   async function handleFindCep() {
     const result = checkInCache();
@@ -54,6 +58,7 @@ function App() {
     await handleRequestApi();
   }
 
+  
   async function handleRequestApi() {
     try {
       setLoading(true);
@@ -69,6 +74,7 @@ function App() {
         logradouro,
         complemento,
         bairro,
+        localidade,
         uf,
       };
       setLoading(false);
@@ -90,7 +96,6 @@ function App() {
           SetSearchCep={SetSearchCep}
           handleFindCep={handleFindCep}
         />
-        {/* {loadingResults && <Loading/>} */}
         <Cardcep
           cep={cep.cep}
           logradouro={cep.logradouro}
@@ -99,6 +104,7 @@ function App() {
           localidade={cep.localidade}
           uf={cep.uf}
         />
+      <button className="save-cep">Salvar cep</button>
       </div>
     </div>
   );
