@@ -4,7 +4,6 @@ import { useLocalStorage } from "react-use";
 import Navbar from "./components/Navbar";
 import Cardcep from "./components/Cardcep";
 import SearchCep from "./components/SearchCep";
-import Loading from "./components/Loading";
 import ErroAlert from "./components/ErroAlert";
 
 function App() {
@@ -18,9 +17,6 @@ function App() {
   const [searchcep, SetSearchCep] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   handleRequestApi();
-  // }, []);
 
   useEffect(() => {
     saveInCache();
