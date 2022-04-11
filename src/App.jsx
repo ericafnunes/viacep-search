@@ -13,7 +13,6 @@ function App() {
   );
   const [cep, setCep] = useState({});
   const [showResults, setShowResults] = useState(false);
-  const [loadingResults, setLoadingResults] = useState(false);
   const [searchcep, SetSearchCep] = useState("");
   const [loading, setLoading] = useState(false);
 
