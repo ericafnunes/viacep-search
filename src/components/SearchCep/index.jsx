@@ -1,7 +1,7 @@
 import { TextField, Button } from '@material-ui/core'
 import useStyles from './style';
 
-function SearchCep({searchcep, SetSearchCep, handleRequestApi}) {
+function SearchCep({searchcep, SetSearchCep, handleFindCep}) {
 
     const classes = useStyles();
 
@@ -17,7 +17,7 @@ function SearchCep({searchcep, SetSearchCep, handleRequestApi}) {
             <Button
                 className={classes.button}
                 variant="contained"
-                onClick={handleRequestApi}>
+                onClick={handleFindCep}>
                 buscar
             </Button>
         </div>
