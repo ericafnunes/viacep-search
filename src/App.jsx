@@ -87,11 +87,11 @@ function App() {
     <div className="App">
       <Navbar />
       <div className="loader">
-    { showResults && <i class="w3-spin fa fa-refresh"></i>}
       </div>
       <div className="container-card">
         {showResults && <ErroAlert />}
-        {loading && <span>Carregando...</span>}
+        {loading && <span>Carregando&nbsp;<i class="w3-spin fa fa-refresh"></i>
+</span>}
         <SearchCep
           searchcep={searchcep}
           SetSearchCep={SetSearchCep}
