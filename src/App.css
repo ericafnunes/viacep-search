@@ -11,3 +11,9 @@
   width: 100%;
   height: calc(100vh - 64px);
 }
+
+.loader{
+  position: absolute;
+  margin-top: 300px;
+  margin-left: 950px;
+}

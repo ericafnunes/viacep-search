@@ -7,7 +7,7 @@ export default makeStyles((theme) => (
             flexDirection: 'column',
             justifyContent: 'space-between',
             width: 300,
-            height: 100,        
+            height: 100, 
         },
         textinput:{
             textTransform: 'uppercase',

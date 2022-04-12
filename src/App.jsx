@@ -6,6 +6,8 @@ import Cardcep from "./components/Cardcep";
 import SearchCep from "./components/SearchCep";
 import ErroAlert from "./components/ErroAlert";
 
+
+
 function App() {
   const [cacheSearch, setCacheSearch, removeCacheSearch] = useLocalStorage(
     "cepSearch",
@@ -15,6 +17,7 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [searchcep, SetSearchCep] = useState("");
   const [loading, setLoading] = useState(false);
+
 
 
   useEffect(() => {
@@ -46,7 +49,6 @@ function App() {
 
   async function handleFindCep() {
     const result = checkInCache();
-    console.log(result);
     if (result) {
       return setCep(result);
     }
@@ -55,22 +57,23 @@ function App() {
 
   
   async function handleRequestApi() {
+    
     try {
       setLoading(true);
       const response = await fetch(
         `https://viacep.com.br/ws/${searchcep}/json/`
-      );
-      const { cep, logradouro, complemento, bairro, localidade, uf } =
+        );
+        const { cep, logradouro, complemento, bairro, localidade, uf } =
         await response.json();
-      console.log(cep, logradouro, complemento, bairro, localidade, uf);
-
-      const currentCep = {
-        cep,
-        logradouro,
-        complemento,
-        bairro,
-        localidade,
-        uf,
+        console.log(cep, logradouro, complemento, bairro, localidade, uf);
+        
+        const currentCep = {
+          cep,
+          logradouro,
+          complemento,
+          bairro,
+          localidade,
+          uf,
       };
       setLoading(false);
       setCep(currentCep);
@@ -83,6 +86,9 @@ function App() {
   return (
     <div className="App">
       <Navbar />
+      <div className="loader">
+    { showResults && <i class="w3-spin fa fa-refresh"></i>}
+      </div>
       <div className="container-card">
         {showResults && <ErroAlert />}
         {loading && <span>Carregando...</span>}
