@@ -90,7 +90,7 @@ function App() {
       </div>
       <div className="container-card">
         {showResults && <ErroAlert />}
-        {loading && <span>Carregando&nbsp;<i class="w3-spin fa fa-refresh"></i>
+        {loading && <span>Carregando&nbsp;<i className="w3-spin fa fa-refresh"></i>
 </span>}
         <SearchCep
           searchcep={searchcep}
