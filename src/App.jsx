@@ -105,7 +105,6 @@ function App() {
           localidade={cep.localidade}
           uf={cep.uf}
         />
-      <button className="save-cep">Salvar cep</button>
       </div>
     </div>
   );
