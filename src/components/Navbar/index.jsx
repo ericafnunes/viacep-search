@@ -14,7 +14,7 @@ function Navbar() {
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6" noWrap className={classes.title}>
-            CONSULTA CEP
+            BUSCA CEP
           </Typography>
         </Toolbar>
       </AppBar>
